@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { NAV_LINKS } from '@/constants/navigation';
 import { cn } from '@/lib/utils';
 
+import { Button } from '../ui/button';
+
 interface MobileNavProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,7 +18,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       aria-modal="true"
       aria-hidden={!isOpen}
       className={cn(
-        'fixed inset-0 z-40 flex flex-col justify-between px-6 pt-24 pb-12 bg-black/95 backdrop-blur-xl transition-all duration-300 ease-in-out md:hidden',
+        'fixed inset-0 z-40 flex flex-col justify-between px-6 pt-24 pb-12 bg-background/95 backdrop-blur-xl transition-all duration-300 ease-in-out md:hidden',
         isOpen
           ? 'translate-y-0 opacity-100 visible pointer-events-auto'
           : '-translate-y-full opacity-0 invisible pointer-events-none',
@@ -29,7 +31,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             href={link.href}
             onClick={onClose}
             tabIndex={isOpen ? 0 : -1}
-            className="text-2xl font-mono text-zinc-300 transition-colors hover:text-white"
+            className="text-2xl font-mono text-muted-foreground transition-colors hover:text-foreground"
           >
             {link.label}
           </Link>
@@ -37,22 +39,27 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       </nav>
 
       <div className="flex flex-col space-y-3 w-full max-w-xs mx-auto">
-        <Link
-          href="/login"
+        <Button
+          variant="outline"
+          size="lg"
           onClick={onClose}
           tabIndex={isOpen ? 0 : -1}
-          className="w-full py-3 text-center text-sm font-semibold text-zinc-300 hover:text-white rounded-full bg-zinc-900 border border-zinc-800 transition-colors"
+          className="w-full rounded-full"
+          render={<Link href="/login" />}
         >
           Login
-        </Link>
-        <Link
-          href="/signup"
+        </Button>
+
+        <Button
+          variant="default"
+          size="lg"
           onClick={onClose}
           tabIndex={isOpen ? 0 : -1}
-          className="w-full py-3 text-center text-sm font-semibold text-white rounded-full bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/30 transition-all"
+          className="w-full rounded-full font-semibold shadow-lg shadow-primary/25"
+          render={<Link href="/signup" />}
         >
           Sign Up
-        </Link>
+        </Button>
       </div>
     </div>
   );
